@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace rgr
 {
-    internal class PlayerLeader
+    internal partial class Engine
     {
+        private class PlayerLeader
+        {
+        }
     }
 }

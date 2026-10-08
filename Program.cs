@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using rgr;
+
+internal class Program
+{
+    public static int Main()
+    {
+        Engine engine = new Engine();
+        engine.Start();
+        return 1;
+    }
+}

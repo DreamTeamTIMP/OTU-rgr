@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace rgr
 {
-    internal class Engine
+    internal partial class Engine
     {
+        private readonly PlayerLeader leader;
+        private readonly PlayerDriven driven;
+        private readonly Map map;
+
+
+        public Engine() 
+        {
+            leader = new PlayerLeader();
+            driven = new PlayerDriven();
+            map = new Map();
+        }
+        internal void Start()
+        {
+
+        }
     }
 }
