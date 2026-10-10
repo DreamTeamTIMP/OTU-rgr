@@ -11,6 +11,8 @@ namespace rgr
         private readonly PlayerLeader leader;
         private readonly PlayerDriven driven;
         private readonly Map map;
+        private int leaderWinCounter = 0;
+        private int drivenWinCounter = 0;
         private bool gameEnded;
 
 
@@ -25,12 +27,31 @@ namespace rgr
 
         private void OnGameEnded(object sender, GameEndedEventArgs e)
         {
-            string winner = e.Winner == EndReason.MapTriggered ? "Ведомый игрок" : "ведущий игрок";
-            Console.WriteLine($"Победил {winner}");
+            if (e.Winner == EndReason.MapTriggered)
+                leaderWinCounter += 1;
+            else
+                drivenWinCounter += 1;
             gameEnded = true;
+            RestoreGame();
+        }
+        private void RestoreGame()
+        {
+            driven.Restore();
+            map.Restore();
+        }
+        internal void Start(double k, int n)
+        {
+            int count = 0;
+            leader.RndFactor = k;
+            while (count < n)
+            {
+                Play();
+                count++;
+            }
+            Console.WriteLine($"Количество побед ведущего: {leaderWinCounter}\nКоличество побед ведомого: {drivenWinCounter}");
         }
 
-        internal void Start()
+        private void Play()
         {
             gameEnded = false;
             while (!gameEnded)

@@ -26,14 +26,8 @@ namespace rgr
                 {
                     throw new ArgumentException(nameof(lvl), "Нельзя остаться на том же уровне.");
                 }
-                if (value == Level.Level5)
-                {
-                    OnGameEnd();
-                }
-                int current = (int)lvl;
-                int next = (int)value;
-
-                int diff = Math.Abs(current - next);
+                
+                int diff = Math.Abs((int)lvl - (int)value);
 
                 if (diff == 1)
                 {
@@ -43,7 +37,10 @@ namespace rgr
                 {
                     throw new ArgumentOutOfRangeException(nameof(lvl), "Можно переходить только на один уровень.");
                 }
-
+                if (lvl == Level.Level5)
+                {
+                    OnGameEnd();
+                }
             } 
         }
 
