@@ -11,6 +11,7 @@ namespace rgr
         private readonly PlayerLeader leader;
         private readonly PlayerDriven driven;
         private readonly Map map;
+        private bool gameEnded;
 
 
         public Engine() 
@@ -18,10 +19,21 @@ namespace rgr
             leader = new PlayerLeader();
             driven = new PlayerDriven();
             map = new Map();
+            driven.RaiseEvent += OnGameEnded;
+            map.RaiseEvent += OnGameEnded;
         }
+
+        private void OnGameEnded(object sender, GameEndedEventArgs e)
+        {
+            string winner = e.Winner == EndReason.MapTriggered ? "Ведомый игрок" : "ведущий игрок";
+            Console.WriteLine($"Победил {winner}");
+            gameEnded = true;
+        }
+
         internal void Start()
         {
-            do
+            gameEnded = false;
+            while (!gameEnded)
             {
                 bool leaderMove = leader.MakeMove();
                 bool drivenMove = driven.MakeMove();
@@ -34,7 +46,6 @@ namespace rgr
                     map.Lvl -= 1;
                 }
             }
-            while ();
         }
     }
 }

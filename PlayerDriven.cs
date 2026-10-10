@@ -7,19 +7,33 @@ using System.Threading.Tasks;
 
 namespace rgr
 {
+    public enum EndReason
+    {
+        MapTriggered,
+        PlayerDrivenTriggered
+    }
+    public class GameEndedEventArgs : EventArgs
+    {
+        public EndReason Winner { get; }
+        public GameEndedEventArgs(EndReason winner) => Winner = winner;
+
+    }
     interface IPlayable
     {
-        event EventHandler<EventArgs> RaiseEvent;
-        void EndGame();
+        event EventHandler<GameEndedEventArgs> RaiseEvent;
+        void OnGameEnd();
         void Restore();
     }
     internal partial class Engine
     {
         private class PlayerDriven : IPlayable
         {
-            public event EventHandler<EventArgs> RaiseEvent;
+            public event EventHandler<GameEndedEventArgs> RaiseEvent;
             private const int numberOfMoves = 25;
-            private static readonly ImmutableArray<bool> moves = [true, false];
+            private static readonly ImmutableArray<bool> moves = [true, true, true, true, true, false, false, false, false, false, 
+                true, true, true, true, false, false, false, false, 
+                true, true, true, false, false, false, 
+                true, false];
             private int currentMove = 0;
 
 
@@ -27,16 +41,17 @@ namespace rgr
             {
                 if (currentMove > numberOfMoves)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    OnGameEnd();
+                    return false;
                 }
                 bool result = moves[currentMove];
                 currentMove++;
                 return result;
             }
 
-            public void EndGame()
+            public void OnGameEnd()
             {
-                RaiseEvent?.Invoke(this, EventArgs.Empty);
+                RaiseEvent?.Invoke(this, new GameEndedEventArgs(EndReason.PlayerDrivenTriggered));
             }
 
             public void Restore()

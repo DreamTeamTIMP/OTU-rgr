@@ -14,7 +14,7 @@ namespace rgr
 
     class Map : IPlayable
     {
-        public event EventHandler<EventArgs> RaiseEvent;
+        public event EventHandler<GameEndedEventArgs> RaiseEvent;
         private Level lvl;
 
         public Level Lvl 
@@ -26,7 +26,10 @@ namespace rgr
                 {
                     throw new ArgumentException(nameof(lvl), "Нельзя остаться на том же уровне.");
                 }
-
+                if (value == Level.Level5)
+                {
+                    OnGameEnd();
+                }
                 int current = (int)lvl;
                 int next = (int)value;
 
@@ -49,9 +52,9 @@ namespace rgr
             lvl = Level.Level0;
         }
 
-        public void EndGame()
+        public void OnGameEnd()
         {
-            RaiseEvent.Invoke(this, EventArgs.Empty);
+            RaiseEvent.Invoke(this, new GameEndedEventArgs(EndReason.MapTriggered));
         }
 
         public void Restore()

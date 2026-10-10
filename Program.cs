@@ -5,7 +5,7 @@ internal class Program
 {
     public static int Main()
     {
-        Engine engine = new Engine();
+        Engine engine = new();
         engine.Start();
         return 1;
     }
