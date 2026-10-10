@@ -21,7 +21,20 @@ namespace rgr
         }
         internal void Start()
         {
-
+            do
+            {
+                bool leaderMove = leader.MakeMove();
+                bool drivenMove = driven.MakeMove();
+                if ((leaderMove && drivenMove) || (!leaderMove && drivenMove))
+                {
+                    map.Lvl += 1;
+                }
+                else
+                {
+                    map.Lvl -= 1;
+                }
+            }
+            while ();
         }
     }
 }

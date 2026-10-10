@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 
 namespace rgr
 {
-    interface IRestorable
+    interface IPlayable
     {
+        event EventHandler<EventArgs> RaiseEvent;
+        void EndGame();
         void Restore();
     }
     internal partial class Engine
     {
-        private class PlayerDriven : IRestorable
+        private class PlayerDriven : IPlayable
         {
+            public event EventHandler<EventArgs> RaiseEvent;
             private const int numberOfMoves = 25;
             private static readonly ImmutableArray<bool> moves = [true, false];
             private int currentMove = 0;
+
 
             public bool MakeMove()
             {
@@ -28,6 +32,11 @@ namespace rgr
                 bool result = moves[currentMove];
                 currentMove++;
                 return result;
+            }
+
+            public void EndGame()
+            {
+                RaiseEvent?.Invoke(this, EventArgs.Empty);
             }
 
             public void Restore()

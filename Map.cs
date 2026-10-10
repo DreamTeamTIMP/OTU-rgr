@@ -12,8 +12,9 @@ namespace rgr
         Level5 = 5,
     }
 
-    class Map : IRestorable
+    class Map : IPlayable
     {
+        public event EventHandler<EventArgs> RaiseEvent;
         private Level lvl;
 
         public Level Lvl 
@@ -46,6 +47,11 @@ namespace rgr
         public Map()
         {
             lvl = Level.Level0;
+        }
+
+        public void EndGame()
+        {
+            RaiseEvent.Invoke(this, EventArgs.Empty);
         }
 
         public void Restore()
