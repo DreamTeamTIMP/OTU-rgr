@@ -41,6 +41,8 @@ namespace rgr
         }
         internal void Start(double k, int n)
         {
+            leaderWinCounter = 0;
+            drivenWinCounter = 0;
             int count = 0;
             leader.RndFactor = k;
             while (count < n)
@@ -58,7 +60,7 @@ namespace rgr
             {
                 bool leaderMove = leader.MakeMove();
                 bool drivenMove = driven.MakeMove();
-                if ((leaderMove && drivenMove) || (!leaderMove && drivenMove))
+                if ((leaderMove && drivenMove) || (!leaderMove && !drivenMove))
                 {
                     map.Lvl += 1;
                 }
