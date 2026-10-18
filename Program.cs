@@ -16,6 +16,7 @@ internal class Program
                 if (k > 1.0 || k < 0.0)
                 {
                     Console.WriteLine("Ошибка введите числа от 0.0 до 1.0");
+                    continue;
                 }
 
                 Console.WriteLine("Введите количество прогонов: ");
@@ -24,6 +25,7 @@ internal class Program
                     if (n <= 0)
                     {
                         Console.WriteLine("Количество прогонов не может быть отрицательным.");
+                        continue;
                     }
                     engine.Start(k, n);
                 }

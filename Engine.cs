@@ -16,7 +16,7 @@ namespace rgr
         private bool gameEnded;
 
 
-        public Engine() 
+        public Engine()
         {
             leader = new PlayerLeader();
             driven = new PlayerDriven();
@@ -45,6 +45,7 @@ namespace rgr
             drivenWinCounter = 0;
             int count = 0;
             leader.RndFactor = k;
+            RestoreGame();
             while (count < n)
             {
                 Play();
@@ -56,17 +57,22 @@ namespace rgr
         private void Play()
         {
             gameEnded = false;
+
             while (!gameEnded)
             {
                 bool leaderMove = leader.MakeMove();
+                if (gameEnded) break;
                 bool drivenMove = driven.MakeMove();
+                if (gameEnded) break;
                 if ((leaderMove && drivenMove) || (!leaderMove && !drivenMove))
                 {
-                    map.Lvl += 1;
+                    if (map.Lvl < Level.Level5)
+                        map.Lvl += 1;
                 }
                 else
                 {
-                    map.Lvl -= 1;
+                    if (map.Lvl > Level.Level0)
+                        map.Lvl -= 1;
                 }
             }
         }

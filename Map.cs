@@ -23,24 +23,20 @@ namespace rgr
             set 
             {
                 if (value == lvl)
-                {
                     throw new ArgumentException(nameof(lvl), "Нельзя остаться на том же уровне.");
-                }
-                
+
+                if (value < Level.Level0 || value > Level.Level5)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Уровень вне диапазона 0..5.");
+
                 int diff = Math.Abs((int)lvl - (int)value);
 
-                if (diff == 1)
-                {
-                    lvl = value;
-                }
-                else
-                {
+                if (diff != 1)
                     throw new ArgumentOutOfRangeException(nameof(lvl), "Можно переходить только на один уровень.");
-                }
+
+                lvl = value;
+
                 if (lvl == Level.Level5)
-                {
                     OnGameEnd();
-                }
             } 
         }
 

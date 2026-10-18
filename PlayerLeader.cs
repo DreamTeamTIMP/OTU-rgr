@@ -29,7 +29,7 @@ namespace rgr
 
             public bool MakeMove()
             {
-                if (rnd.NextDouble() >= rndFactor)
+                if (rnd.NextDouble() < rndFactor)
                     return true;
                 return false;
             }
