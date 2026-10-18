@@ -30,10 +30,10 @@ namespace rgr
         {
             public event EventHandler<GameEndedEventArgs> RaiseEvent;
             private const int numberOfMoves = 25;
-            private static readonly ImmutableArray<bool> moves = [true, true, true, true, true, false, false, false, false, false, 
-                true, true, true, true, false, false, false, false, 
-                true, true, true, false, false, false, 
-                true, false];
+            private static readonly ImmutableArray<bool> moves = [
+                true, true, true, true, true, false, false, false, false, false, 
+                false, true, true, false, false, false, false, true, 
+                true, true, true, false, true, false, false ];
             private int currentMove = 0;
 
 
